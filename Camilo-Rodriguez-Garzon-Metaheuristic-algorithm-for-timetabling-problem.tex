@@ -12,7 +12,9 @@
 % ---------------------------------------------------------------------------
 \documentclass[centering]{report}
 \usepackage[landscape]{geometry}
-\geometry{top=0.85cm,bottom=1.4cm,left=4cm,right=4cm}
+\usepackage{natbib}
+
+\geometry{top=0.85cm,bottom=1.4cm,left=3.5cm,right=3.5cm}
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 % -- SLIDES PAGE NUMBERING --
@@ -71,6 +73,15 @@
 \usepackage{amsfonts}
 \usepackage{booktabs}
 \usepackage{siunitx}
+\usepackage{multirow}
+
+% ---------------------------------------------------------------------------
+% -- Algorithm
+% ---------------------------------------------------------------------------
+\usepackage{algorithmicx}
+\usepackage{algorithm} % http://ctan.org/pkg/algorithms
+\usepackage{algpseudocode}
+
 
 % ---------------------------------------------------------------------------
 % -- Colors
@@ -104,7 +115,8 @@
 \begin{center}
   {\Huge{\underline{\textbf{Metaheuristic algorithm for timetabling problem}}}} \\[4mm]
   {\Huge{(Seminar III)}} \\[10mm]
-  {\Huge{Camilo Rodríguez-Garzón}} \\[10mm]
+  {\Huge{Camilo Rodríguez-Garzón}} \\
+  {\Huge{Juan Rivera-Agudelo}} \\[10mm]
   {\Huge University EAFIT}\\
   {\Huge Medellín, Colombia}\\[20mm]
   {\Huge June 5, 2018}\\
@@ -117,11 +129,13 @@
 \begin{itemize}
     \item Introduction
     \item Motivation
-    \item Hard constraint
-    \item Soft constraint
+    \item Hard constraints
+    \item Soft constraints
     \item Methodology
     \item Problem formulation
     \item Algorithmic solution
+    \item Computational experiments
+    \item Conclusions
 \end{itemize}
 \end{slide}
 
@@ -132,7 +146,7 @@
 \item Currently EAFIT does not have an automated system that allows to schedule university timetabling.
 \item Each school or university has different characteristics that make the problem particular.
 \item This is a problem of combinatorial optimization of complexity NP-Hard \cite {Abdelhalim2016}.
-\item The developed algorithm can be applied to different topics that are related to timetablings scheduling
+\item The algorithm in developing can be applied to different topics that are related to timetabling scheduling.
 \end{itemize}
 
 \end{slide}
@@ -143,7 +157,7 @@
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.6\linewidth]{timetabling.png}
+  \includegraphics[width=0.65\linewidth]{timetabling.png}
   \caption{\label{fig:timetabling}Timetabling problem}
 \end{figure}
 
@@ -151,7 +165,7 @@
 
 
 \begin{slide}
-\textbf{Hard constraint event:}\\
+\textbf{Hard constraints event:}\\
 
 A factible solution meets the following set of hard constraints $ \mathrm{CH_{1}-CH_{6}} $ presented below:
 
@@ -165,7 +179,7 @@ A factible solution meets the following set of hard constraints $ \mathrm{CH_{1}
 \end{slide}
 
 \begin{slide}
-\textbf{Hard constraint teacher:}\\
+\textbf{Hard constraints teacher:}\\
 
 \begin{itemize}
 \item $\mathrm{HC_{5}}$: {\color{gray}(A teacher can not be scheduled to more than one lesson in a given period.)}
@@ -175,7 +189,7 @@ A factible solution meets the following set of hard constraints $ \mathrm{CH_{1}
 \end{slide}
 
 \begin{slide}
-\textbf{Hard constraint student:}\\
+\textbf{Hard constraints student:}\\
 
 \begin{itemize}
 \item $\mathrm{HC_{7}}$: {Give students with perfect curriculum six different schedules for each of the events they are studying and be part of this semester.}
@@ -185,14 +199,14 @@ A factible solution meets the following set of hard constraints $ \mathrm{CH_{1}
 \end{slide}
 
 \begin{slide}
-\textbf{Soft constraint:}\\
+\textbf{Soft constraints:}\\
 
-In addition to the feasibility with respect to difficult constraints, the requirements of $ \mathrm {CS_{1}-CS_{4}} $ listed below should be satisfied as much as possible:
+In addition to the feasibility with respect to difficult constraints, the requirements of $ \mathrm {SC_{1}-SC_{4}} $ listed below should be satisfied as much as possible:
 
 \begin{itemize}
-\item $\mathrm{HC_{1}}$: {\color{gray}(Avoid teachers' idle periods.)}
-\item $\mathrm{HC_{2}}$: {\color{gray}(A student should not have a single course on a day.)}
-\item $\mathrm{HC_{3}}$: {\color{gray}(A student should not have more than two consecutive courses.)}
+\item $\mathrm{SC_{1}}$: {\color{gray}(Avoid teachers' idle periods.)}
+\item $\mathrm{SC_{2}}$: {\color{gray}(A student should not have a single course on a day.)}
+\item $\mathrm{SC_{3}}$: {\color{gray}(A student should not have more than two consecutive courses.)}
 \end{itemize}
 
 \end{slide}
@@ -202,7 +216,7 @@ In addition to the feasibility with respect to difficult constraints, the requir
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1\linewidth]{methodologyflow.png}
+  \includegraphics[width=1.1\linewidth]{methodologyflow.png}
   \caption{\label{fig:methodologyflow}Timetabling problem methodology}
 \end{figure}
 \end{slide}
@@ -213,7 +227,7 @@ In addition to the feasibility with respect to difficult constraints, the requir
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.6\linewidth]{methodologyflow2.png}
+  \includegraphics[width=0.7\linewidth]{methodologyflow2.png}
   \caption{\label{fig:methodologyflow2}Timetabling problem methodology}
 \end{figure}
 \end{slide}
@@ -221,52 +235,128 @@ In addition to the feasibility with respect to difficult constraints, the requir
 \begin{slide}
 \textbf{Related work:}\\
 
+\begin{table}[h!]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{| l | l | l |}
+    \hline
+    \multicolumn{2}{|c|}{\color{black} \textbf{Techniques}} & \color{black} \textbf{Article name} \\ \hline
+    \multicolumn{3}{p{10cm}}{} \\
+    \hline
+
+    \multicolumn{2}{|l|}{Graph Coloring (GC)} & \color{black} An Introduction to
+TimeTabling \cite{DeWerra1985} \\
+
+    \multicolumn{1}{|l}{Integer/Linear
+    Programming (IP/LP)} &  \multicolumn{1}{l|}{} & \color{black} \multirow{3}{11cm}{ New integer linear programming approaches for course timetabling \cite{Boland2008} , Integer programming methods for large-scale practical classroom assignment problems \cite{Phillips2015}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{Constraint Satisfaction
+Programming (CSP)} & \multicolumn{1}{l|}{} & \color{black} Timetable planning using the constraint-based reasoning \cite{Deris2000}\\
+
+    \multicolumn{1}{|l}{Multi-population} & \multicolumn{1}{l|}{\color{black}Genetic Algorithm (GA)} & \color{black} \multirow{2}{11cm}{ A Utilization-based Genetic Algorithm for Solving the University Timetabling Problem (UGA) \cite{Abdelhalim2016} }\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Ant Colony Optimization (ACO)} & \color{black} \multirow{3}{11cm}{A MAX - MIN Ant System for the University Course Timetabling Problem \cite{Socha2002}, A MAX-MIN Ant System for the University Course Timetabling Problem \cite{Brabazon2015}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Artificial Bee Colony (ABC)} & \color{black} \multirow{2}{11cm}{ University course timetabling using hybridized artificial bee colony with hill climbing optimizer \cite{Bolaji2014}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Meme tic Algorithm (MA)} & \color{black} \multirow{2}{11cm}{ Using improved memetic algorithm and local search to solve university Course Timetabling problem (UCTP) \cite{Joudaki2011}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Harmony Search Algorithm (HSA)} & \color{black} \multirow{2}{11cm}{ University course timetabling using a hybrid harmony search metaheuristic algorithm \cite{Al-Betar2012} }\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{Single-population} & \multicolumn{1}{l|}{\color{black}Local Search (LS)} & \color{black} \multirow{4}{11cm}{ A fuzzy genetic algorithm with local search for university course timetabling \cite{Kohshori2011}, Genetic algorithms with guided and local search strategies for university course timetabling \cite{Yang2011}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Variable Neighborhood Search (VNS)} & \color{black} \multirow{2}{11cm}{ An Investigation Of Variable Neighbourhood Search For University Course Timetabling \cite{Abdullah2005}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Simulated Annealing (SA)} & \color{black} \multirow{4}{11cm}{ Solving the Course Scheduling Problem Using Simulated Annealing \cite{Aycan2009}, A hybrid simulated annealing with Kempe Chain neighborhood for the university timetabling problem \cite{Tuga2007}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Tabu Search (TS)} & \color{black} \multirow{4}{11cm}{ The effect of neighborhood structures on tabu search algorithm in solving course timetabling problem \cite{Aladag2009}, Design and implementation of a course scheduling system using Tabu Search \cite{Alvarez-Valdes2002}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{Novel Intelligent} & \multicolumn{1}{l|}{\color{black}Hybrid Algorithms (Hybrid Meta heuristic)} & \color{black} \multirow{2}{11cm}{ A new hybrid algorithm for university course timetabling problem using events based on groupings of students \cite{Badoni2014} } \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Fuzzy method} & \color{black} \multirow{2}{11cm}{Fuzzy genetic heuristic for university course timetable problem \cite{Chaudhuri2010}, A fuzzy solution based on Memetic algorithms for timetabling \cite{Golabpour2008}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Clustering Algorithms} & \color{black} \multirow{2}{11cm}{Applying a novel clustering technique based on FP- tree to University timetabling problem: A case study \cite{Shatnawi2010}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+
+
+    \multicolumn{1}{|l}{Multi-Agent Systems} & \multicolumn{1}{l|}{ \color{black}Review papers Multi-Agent Systems} & \color{black} \multirow{3}{11cm}{A multi-agent system for course timetabling \cite{Yanga2011}, Implementation of class timetabling using multi agents \cite{Nandhini2009}}\\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+    \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
+  \hline 
+  \end{tabular}%
+  }
+  \label{Table:relatedwork}
+  \caption{Brief literature about University Timetabling Problem}
+\end{table}
+
 \end{slide}
 
 \begin{slide}
 \textbf{Problem formulation:}\\
 
 \begin{table}[h!]
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{| l | l |}
-\hline
-\color{black} \textbf{Symbols} & \color{black} \textbf{Definition} \\ \hline
-\multicolumn{2}{p{10cm}}{\color{gray}Sets} \\
-\hline
-$s \in S$ & \color{black}Set of slot composed of days $D$ and periods $P$\\
-$r \in R$ & \color{black}Set of rooms \\
-$e \in E$ & \color{black}Set of event composed of courses $C$ and groups $G$ \\ 
-\hline
-\multicolumn{2}{p{10cm}}{\color{gray}Parameters} \\
-\hline
-$w_{r}$ & \color{black}Unit cost of using the room $r$\\
-$f_e$ & \color{black}frequency with which an event $e$ is given in the week\\
-$dem_e$ & \color{black}Intensity in hours with which an $e$ event is imparted in a day\\
-$cap_s$ & \color{black}Capacity in hours the slot $s$ has\\
-$com_{er}$ & $\left\{
-\begin{array}{l l}
- {\color{black}1} \hspace{1cm} \textrm{{\color{black}if the event} $e$ {\color{black}can be assigned to the room} $r$} \\
- \color{black}0 \hspace{1cm} \textrm{Otherwise}.
-\end{array}
-\right.
-$\\
-$\phi$ & \color{black}Subset of incompatible slots with slot $s$ \\
-\hline
-\multicolumn{2}{p{10cm}}{\color{gray}Decision variables} \\
-\hline 
-$x_{esr}$ & $\left\{
-\begin{array}{l l}
- {\color{black}1} \hspace{1cm} \textrm{{\color{black}if the event} $e$ {\color{black}is programmed to a time slot} $s$ {\color{black} that is assigned to the room } $r$} \\
- \color{black}0 \hspace{1cm} \textrm{Otherwise}.
-\end{array}
-\right.
-$\\
-\hline
-\end{tabular}%
-}
-\label{Table:modelevent}
-\caption{Notation used for modeling events at EAFIT University}
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{| l | l |}
+    \hline
+    \color{black} \textbf{Symbols} & \color{black} \textbf{Definition} \\ \hline
+    \multicolumn{2}{p{10cm}}{\color{gray}Sets} \\
+    \hline
+    $s \in S$ & \color{black}Set of slot composed of days $D$ and periods $P$\\
+    $r \in R$ & \color{black}Set of rooms \\
+    $e \in E$ & \color{black}Set of event composed of courses $C$ and groups $G$ \\ 
+    \hline
+    \multicolumn{2}{p{10cm}}{\color{gray}Parameters} \\
+    \hline
+    $w_{r}$ & \color{black}Unit cost of using the room $r$\\
+    $f_e$ & \color{black}frequency with which an event $e$ is given in the week\\
+    $dem_e$ & \color{black}Intensity in hours with which an $e$ event is imparted in a day\\
+    $cap_s$ & \color{black}Capacity in hours the slot $s$ has\\
+    $com_{er}$ & $\left\{
+    \begin{array}{l l}
+     {\color{black}1} \hspace{1cm} \textrm{{\color{black}if the event} $e$ {\color{black}can be assigned to the room} $r$} \\
+     \color{black}0 \hspace{1cm} \textrm{Otherwise}.
+    \end{array}
+    \right.
+    $\\
+    $\phi$ & \color{black}Subset of incompatible slots with slot $s$ \\
+    \hline
+    \multicolumn{2}{p{10cm}}{\color{gray}Decision variables} \\
+    \hline 
+    $x_{esr}$ & $\left\{
+    \begin{array}{l l}
+     {\color{black}1} \hspace{1cm} \textrm{{\color{black}if the event} $e$ {\color{black}is programmed to a time slot} $s$ {\color{black} that is assigned to the room } $r$} \\
+     \color{black}0 \hspace{1cm} \textrm{Otherwise}.
+    \end{array}
+    \right.
+    $\\
+    \hline
+  \end{tabular}%
+  }
+  \label{Table:modelevent}
+  \caption{Notation used for modeling events at EAFIT University}
 \end{table}
 
 \end{slide}
@@ -317,506 +407,118 @@ The objective ($1.1.1$) is to minimize the use of artificial salons. The IP rest
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.6\linewidth]{chainresponsability.png}
+  \includegraphics[width=0.65\linewidth]{chainresponsability.png}
   \caption{\label{fig:methodologyflow2}Chain Responsability to Timetabling problem}
 \end{figure}
 \end{slide}
 
-% -- End of the Circle ---------------------
 \begin{slide}
-\textbf{Univalence and Transport}
+\textbf{Algorithmic solution:}\\
 
-{\color{gray}
-\everymath{\color{gray}}
-\begin{itemize}
-\item An introduction rule for {(\id[\type]{A}{B})}:
-\begin{align*}
-  \ua : ({\eqv A B}) \to (\id[\type]{A}{B}).
-\end{align*}
-\item The elimination rule for $(\id[\type]{A}{B})$:
-\begin{align*}
-  \idtoeqv \jdeq \transfibf{X \mapsto X} : (\id[\type]{A}{B}) \to (\eqv A B).
-\end{align*}
-\end{itemize}
-
-\begin{lem}\label{thm:transport-is-ap}
-  For any type family $B:A\to\type$ and $x,y:A$ with a path $p:x=y$ and $u:B(x)$, we have
-  \begin{align*}
-    \transfib{B}{p}{u} &= \transfib{X\mapsto X}{\apfunc{B}(p)}{u}\\
-    &= \idtoeqv(\apfunc{B}(p))(u).
-  \end{align*}
-\end{lem}
+{\huge
+  \begin{algorithmic}[1]
+    \Procedure{GRASP Metaheurístic}{}%\Comment{The g.c.d. of a and b}
+    \State $f^* \gets \alpha $
+    \State $input \gets $ \textbf{ReadInput()};
+    \If{ \textbf{validate($ input $)} }
+      \For{$i \leq i_{max}$}
+        \State $x\gets $ \textbf{GreedyRandomized()};
+        \State $x\gets $ \textbf{LocalSearch($x$)};
+        \If{ $f(x) < f^*$ }
+          \State $f^*\gets f(x);$
+          \State $x*\gets x;$
+        \EndIf    
+      \EndFor
+    \EndIf
+    \State \textbf{WriteOutput($x^*$)};%\Comment{The gcd is b}
+    \EndProcedure
+  \end{algorithmic}
 }
-\begin{lem}\label{thm:transport-is-given}
-  Given $B:A\to\type$ and $x,y:A$, with a path $p:x=y$ and
-  \underline{\color{black}an equivalence $e:\eqv{B(x)}{B(y)}$}
-  \underline{\color{black}such that $\apfunc{B}(p) = \ua(e)$}, then for any $u:B(x)$ we have
-  \begin{align*}
-    \transfib{B}{p}{u} &= e(u).
-  \end{align*}
-\end{lem}
-{\color{gray}(Pictures on the whiteboard)}
 \end{slide}
-% ---------
 
 \begin{slide}
-Suppose we have a type $X$ and the equivalence $e:\eqv X X$.
-We can define a type family $B:\Sn^1 \to \UU$ by using $\Sn^1$-recursion:
+\textbf{Computational experiments:}\\
 
-\begin{mathparpagebreakable}
-  B(\base) \defeq X
-  \qquad\text{\color{black} and}\qquad
-  \ap B\lloop \defid \ua(e).
-\end{mathparpagebreakable}
+According to \citep{Bolaji2014} \citep{eventMAP} the algorithm will be tested using the following instances:\\
 
-
-The type $X$ thus appears as the fiber $B(\base)$ of $B$ over the basepoint. We
-consider as the equivalence $e$ the boolean negation ($\mathsf{neg} :
-\eqvspaced{\bool}{\bool}$). Therefore,
-\vspace{3mm}
-\begin{align*}
-  B &\defeq \rec{\Sn^1}(\UU, \bool, \ua(\mathsf{neg})),\\
-  B(\base) &\defeq \bool,\\
-  B(\lloop) &:= \ua(\mathsf{neg}).
-\end{align*}
-{\color{gray}(Pictures on the whiteboard.)}
-\end{slide}
-% ---------
-
-% \begin{equation*}
-%   \xymatrixcolsep{10pc}
-%   \xymatrixrowsep{5pc}
-%   \vcenter{\xymatrix@1{
-%       B(\base)\,\,\ar[r]^{\idtoeqv} \ar[d]_{\transfib{B(\base)}{\lloop}{\_}} &
-%       \bool \ar[d]^{\mathsf{neg}}\\
-%       B(\base)\ar[r]_g &
-%       \bool
-%       }}
-%   \end{equation*}
-
-\begin{slide}
-If $x : \bool$ and $B$ as was defined above:
-\begin{lem}\label{lem0}
-  $\transfib{B}{\lloop}{x} = \mathsf{neg}(x).$
-\end{lem}
-\begin{proof}
-  \cref{thm:transport-is-given} $(B, \lloop, \mathsf{neg}, x)$.
-\end{proof}
-
-{\color{gray}
-\everymath{\color{gray}}
-\begin{lem}\label{thm:omg}%[The $\omega$-groupoid structure of types]
-  % \index{associativity!of path concatenation}%
-  % \index{unit!law for path concatenation}%
-  Suppose $A:\type$, that $x,y,z,w:A$ and that $p:x= y$ and $q:y = z$ and $r:z=w$.
-  We have the following:
-  \begin{enumerate}
-  % \item $p= p\ct \refl{y}$ and $p = \refl{x} \ct p$.\label{item:omg1}
-  \item $\opp{p}\ct p=  \refl{y}$ and $p\ct \opp{p}= \refl{x}$.\label{item:omg2}
-  % \item $\opp{(\opp{p})}= p$.\label{item:omg3}
-  % \item $p\ct (q\ct r)=  (p\ct q)\ct r$.\label{item:omg4}
-  \end{enumerate}
-\end{lem}
-
-
-\begin{lem}\label{thm:transport-concat}
-  Given $P:A\to\type$ with $p:\id[A]xy$ and $q:\id[A]yz$ while $u:P(x)$, we have
-  \begin{align*}
-    \trans{q}{\trans{p}{u}} = \trans{(p\ct q)}{u}.
-  \end{align*}
-\end{lem}
-}
-\begin{lem}\label{lem1}
-  $\transfib{B}{\lloop^{-1}}{x} = \mathsf{neg}(x).$
-\end{lem}
-
-\begin{lem}\label{lem2}
-$\transfib{B}{\lloop^2}{x} = x.$
-\end{lem}
-% \vfill
-% \begin{center}
-% \includegraphics[width=0.7\textwidth]{Bid}
-% \end{center}
-% \vfill
-\end{slide}
-% ---------
-
-\begin{slide}
-Whiteboard.
-\end{slide}
-% ---------
-
-{\color{gray}
-\everymath{\color{gray}}
-
-\begin{slide}
-\begin{lem}[Dependent map]\label{lem:mapdep}
-  Suppose $f:\prd{x: A} P(x)$; then we have a map
-  \[\apdfunc f : \prd{p:x=y}\big(\id[P(y)]{\trans p{f(x)}}{f(y)}\big).\]
-\end{lem}
-
-\begin{lem}\label{thm:trans-trivial}
-  If $P:A\to\type$ is defined by $P(x) \defeq B$ for a fixed $B:\type$, then for any $x,y:A$ and $p:x=y$ and $b:B$ we have a path
-  \[ \transconst Bpb : \transfib P p b = b. \]
-\end{lem}
-\begin{lem}\label{thm:apd-const}
-  For $f:A\to B$ and $p:\id[A]xy$, we have
-  \[ \apdfunc f(p) = \transconst B p{f(x)} \ct \apfunc f (p). \]
-\end{lem}
-\end{slide}
-% ---------
-
-\begin{slide}
-\begin{thm}\label{thm:path-sigma}
-Suppose that $P:A\to\type$ is a type family over a type $A$ and let $w,w':\sm{x:A}P(x)$. Then there is an equivalence
-\begin{equation*}
-\eqvspaced{(w=w')}{\dsm{p:\proj{1}(w)=\proj{1}(w')} \trans{p}{\proj{2}(w)}=\proj{2}(w')}.
-\end{equation*}
-\end{thm}
-
-
-\begin{lem}\label{eq:transport-arrow}
-Given a type $X$, a path $p:\id[X]{x_1}{x_2}$, type families $A,B:X\to \type$, and a function $f : A(x_1) \to B(x_1)$,  we have
-\begin{mathparpagebreakable}
-  \transfib{x\mapsto A(x)\to B(x)}{p}{f} =\\
-  \Big(x \mapsto \transfib{B}{p}{f(\transfib{A}{\opp p}{x})}\Big)
-\end{mathparpagebreakable}
-\end{lem}
-\end{slide}
-% ---------
-
-\begin{slide}
-\begin{thm}\label{thm:transport-path}
-  For $f,g:A\to B$, with $p : \id[A]{a}{a'}$ and $q : \id[B]{f(a)}{g(a)}$, we have
-  \begin{align*}
-    &\id[f(a') = g(a')]{\transfib{x \mapsto \id[B]{f(x)}{g(x)}}{p}{q}}\\
-    &\hspace*{60mm}{\opp{(\apfunc{f}{p})} \ct q \ct \apfunc{g}{p}}.
-  \end{align*}
-\end{thm}
-
-\begin{thm}\label{thm:transport-path2}
-  Let $B : A \to \type$ and $f,g : \prd{x:A} B(x)$, with $p : \id[A]{a}{a'}$ and $q : \id[B(a)]{f(a)}{g(a)}$.
-  Then we have
-  \begin{align*}
-    &\transfib{x \mapsto \id[B(x)]{f(x)}{g(x)}}{p}{q} =\\
-    &\hspace*{30mm}\opp{(\apdfunc{f}(p))} \ct \apfunc{(\transfibf{B}{p})}(q) \ct \apdfunc{g}(p).
-  \end{align*}
-\end{thm}
-\end{slide}
-% ---------
-}
-
-
-% -- Intro Flattening Lemma
-\begin{slide}
-\textbf{The Flattening Lemma}\footnote{\Large
-See the full description in \cref{thm:flattening-lem}.}\\
-\begin{itemize}
-\item If $W$ and $\widetilde{W}$ are two higher inductive types,
-\item $P : W \to \UU$ is a type family over $W$, and
-\item $\widetilde{W}$ constructors can be deduced from $W$\\
-constructors and from the definition of $P$
-\end{itemize}
-We have the equivalence
-\[ \color{darkgreen} \eqvspaced{\Parens{\sm{x:W} P(x)}}{\widetilde{W}}. \]
-$\widetilde{W}$ is called the ``flattened'' higher inductive
-of the total space $\sm{x:W} P(x)$.
-\end{slide}
-% ---------
-
-% -- The Flattening Lemma
-\begin{slide}
-\begin{lem}[The Flattening Lemma]
-\label{thm:flattening-lem}
-\begin{align*}
-  \color{darkred}
-  \eqvspaced{\Parens{\sm{x:W} P(x)}}{\widetilde{W}}
-\end{align*}
-
-Suppose we have $A,B:\type$ and $f,g:B\to{}A$, and that
-the higher inductive type $W$ is generated by
-
-\begin{itemize}
-\item $\cc:A\to{}W$ % and
-\item $\pp:\prd{b:B} (\cc(f(b))=_W\cc(g(b)))$
-\end{itemize}
-In addition, suppose we have
-\begin{itemize}
-\item $C:A\to\type$ %is a family of types over $A$, and
-\item $D:\prd{b:B}\eqv{C(f(b))}{C(g(b))}$ % is a family of equivalences over $B$.
-\end{itemize}
-Define a type family $P : W\to\type$ recursively by
-\begin{mathparpagebreakable}
-  P(\cc(a)) \defeq C(a)\qquad\and{\text{\color{black}and}}\qquad
-  \map{P}{\pp(b)} \defid \ua(D(b)).
-\end{mathparpagebreakable}
-Let \Wtil be the higher inductive type generated by
-\begin{itemize}
-\item $\cct:\prd{a:A} C(a) \to \Wtil$ and
-\item $\ppt:\prd{b:B}{y:C(f(b))} (\cct(f(b),y)=_{\Wtil}\cct(g(b),D(b)(y)))$.
-\end{itemize}
-\end{lem}
-\end{slide}
-% ---------
-
-\begin{slide}
-\textbf{Exercise:}
-\begin{align*}
-\eqvspaced{\sm{x:\Sn^1}B(x)}{\Sn^1}.
-\end{align*}
-\begin{proof}[Solution]\ \\
-We show first the equivalence,
-\begin{align*}
-\eqvspaced{\sm{x:\Sn^1}B(x)}{\hyperlink{suspensions}{\susp\bool}},
-\end{align*}
-by applying \cref{thm:flattening-lem}
-with the definitions:
-\begin{itemize}
-\item $W \defeq\Sn^1$,
-\item $A\defeq B\defeq\unit$, $f\defeq g\defeq id_{\unit}$.\\[1.5mm]
-\item $\cc:\unit\rightarrow W$ with $\cc\defeq \lambda\, \_\,.\,\base$,
-\item $\pp:\prd{b:\unit}\base=_{\Sn^1}\base$ with
-    $\pp\defeq \lambda\, \_\,.\,\lloop$.\\[1.5mm]
-\item $C: \unit\to\UU$ with $C\defeq \lambda\, \_\,.\,\bool$,
-\item $D:\prd{b:B}\,\eqvspaced{\bool}{\bool}$
-    with $D\defeq\lambda\, \_\,.\,\mathsf{neg}$.
-\end{itemize}
-
-\breakslide
-% --------
-
-\vspace*{\fill}
-\begin{itemize}
-\item The type family $P:\Sn^1\rightarrow\UU$, $P \defeq B$.
-\begin{align*}
-    &B(\base)\defeq\bool,\,\ \apfunc{B}(\lloop)\defeq\ua(\mathsf{neg}).
-\end{align*}
-\item $\Wtil\defeq\susp\bool$.\\[1.5mm]
-\item $\cct : \prd{a:\unit}\bool\rightarrow\susp\bool$,\\
-    $\cct \defeq \lambda \_. \rec{\bool} {(\susp\bool, \mathsf{N},\mathsf{S})}$.\\[1.5mm]
-\item $\ppt:\prd{b:\unit}\prd{y:\bool}\cct(b,y)=_{\Wtil}\cct(b,\mathsf{neg}(y))$,\\
-$\ppt \defeq \lambda\_.\ind{(y:\bool)}{( \mathsf{merid}(0), \opp{\mathsf{merid}(1)})}$.
-\end{itemize}
-In class, we proved that $\eqvspaced{\susp\bool}{\Sn^1}$.
-Then, by transitivity of our equivalence relation ($\simeq$), we have
-\begin{align*}
-    \eqvspaced{\sm{x:\Sn^1}Bx}{\Sn^1}.
-\end{align*}
-\end{proof}
-\end{slide}
-% ---------
-
-\begin{slide}
-\textbf{Alternative Approach:\footnote{\LARGE Suggested and verified in \Agda by Håkon Robbestad}}\\
-
-\begin{lem} For $A:\UU$, $B: A\to\UU$, $C : \UU$,
-\begin{align*}
-    \eqvspaced{\sm{a : A} B(a)}{C},
-\end{align*}
-if we have
-\begin{itemize}
-\item $f : \prd{a:A}(B(a)\rightarrow C)$,
-\item $g : C\rightarrow A$,
-\item $h : \prd{c:C}\,B(g(c))$,
-\item $\boldsymbol{\alpha:\prd{c:C}\,f(g(c),h(c)) =_C c}$,
-\item $\boldsymbol{\beta_0:\prd{a:A}{b:B(a)}\,g(f(a,b))=_A a}$, and
-\item $\boldsymbol{\beta_1:\prd{a:A}{b:B(a)}}\\
-\hspace*{35mm}\boldsymbol{\transfib{B}{\beta_{0}(a,b)}{h(f(a,b)))} = b}$.
-\end{itemize}
-\vspace*{\fill}
-\end{lem}
-\end{slide}
-% ---------
-
-\begin{slide}
-\begin{proof}
-Let us define
-\begin{itemize}
-    \item $\hat{f} : \sm{a : A} B(a) \to C$ \\ $\hat{f}((a, b)) \defeq f(a,b)$,
-    \item $\opp{\hat{f}} : C \to \sm{a : A} B(a)$, \\
-    $\opp{\hat{f}}(b)\defeq (g(c), h(c))$.
-\end{itemize}
-\begin{itemize}
-    \item $s_1 : \prd{c : C} \hat{f}(\opp{\hat{f}}(c)) = c$,\\
-    $s_1 \defeq \alpha$.
-    \item $s_2 : \prd{(a,b) : \sm{x:A} B(x)}\, \opp{\hat{f}}(\hat{f}(a,b)) = (a,b)$,\\
-    $s_2 \defeq \lambda (a,b).\opp{\text{\cref{thm:path-sigma}}}(\beta_0(a,b), \beta_1(a,b))$.
-\end{itemize}
-Then,
-\begin{align*}
-(\hat{f}, ((\opp{\hat{f}},s_1),(\opp{\hat{f}},s_2))) : \eqvspaced{\sm{a : A} B(a)}{C}.
-\end{align*}
-\end{proof}
-\end{slide}
-% ---------
-
-\begin{slide}
-\textbf{Proof of \cref{thm:flattening-lem}.} (Section 6.12 Pp. 273-289).
-\begin{lem}\label{thm:flattening-cp}
-  There are functions
-  \begin{itemize}
-  \item $\cct':\prd{a:A} C(a) \to \sm{x:W} P(x)$ and
-  \item $\ppt':\prd{b:B}{y:C(f(b))} \\\hspace*{20mm}
-   \Big(\cct'(f(b),y)=_{\sm{w:W}P(w)}\cct'(g(b),D(b)(y))\Big)$.
-  \end{itemize}
-\end{lem}
-\begin{proof}\hspace{5cm}
-  \begin{itemize}
-    \item Define $\cct'(a,x) \defeq (\cc(a),x)$.
-    \item
-Given  $b:B$ and $y:C(f(b)$, since we have
-\begin{align*}
-\pp(b):\cc(f(b))=\cc(g(b)),
-\end{align*}
-\begin{align*}
- &\ppt'(b,y) : (\cc(f(b)),y) = (\cc(g(b)),D(b)(y))\\
- &\ppt'(b,y) \defeq \lambda b y.\opp{\text{\cref{thm:path-sigma}}}\\
-  &\hspace{70mm}(\pp(b), \cref{thm:transport-is-given}(P,D,\pp(b),y)).
-\end{align*}
-  \end{itemize}
-\end{proof}
-\end{slide}
-% ----------
-
-\begin{slide}
-\begin{lem}\label{thm:flattening-rect}
-  Suppose $Q:\big(\sm{x:W} P(x)\big) \to \type$ is a type family and that we have\\[2mm]
-  \begin{itemize}
-  \item $c : \prd{a:A}{x:C(a)} Q(\cct'(a,x))$ and
-  \item $p : \prd{b:B}{y:C(f(b))}\\
-  \hspace*{20mm}\Big(\trans{\ppt'(b,y)}{c(f(b),y)} = c(g(b),D(b)(y))\Big)$. %_{Q(\cct'(g(b),D(b)(y)))}
-  \end{itemize}
-  \vspace*{2mm}
-  Then there exists $k:\prd{z:\sm{w:W} P(w)} Q(z)$ such that $k(\cct'(a,x)) \jdeq c(a,x)$.
-\end{lem}
-\begin{proof} Proof in the book, Pp. 276-277.
-\end{proof}
-\end{slide}
-% ---------
-
-\begin{slide}
-\begin{lem}\label{thm:flattening-rectnd}
-  Suppose $Q$ is a type and that we have\\[2mm]
-  \begin{itemize}
-  \item $c : \prd{a:A} C(a) \to Q$ and
-  \item $p : \prd{b:B}{y:C(f(b))}\\
-  \hspace*{20mm}\Big(c(f(b),y) =_Q c(g(b),D(b)(y))\Big)$.
-  \end{itemize}
-  \vspace*{2mm}
-  Then there exists $k:\big(\sm{w:W} P(w)\big) \to Q$ such that $k(\cct'(a,x)) \jdeq c(a,x)$.
-\end{lem}
-\begin{proof} Proof in the book, Pp. 277-278.
-\end{proof}
-\end{slide}
-% ---------
-
-
-\begin{slide}
-\begin{lem}\label{thm:ap-sigma-rect-path-pair}
-  Let $B:X\to\type$ be a type family and let
-  \begin{align*}f:\sm{x:X} B(x) \to Z\end{align*}
-  be defined componentwise by $f(x,b) \defeq d(x)(b)$ for a curried function $d:\prd{x:X} B(x)\to Z$.
-  Then if we have
-  \begin{itemize}
-  \item $s:\id[X]{x_1}{x_2}$,
-  \item $b_1:B(x_1), b_2:B(x_2)$, and
-  \item $r:\trans{s}{b_1}=b_2$,
-  \end{itemize}
-
- the path
-  \begin{align*}
-    \apfunc f (\pairpath(s,r)) :f(x_1,b_1) = f(x_2,b_2)
-  \end{align*}
-  is equal to the composite \dots
-
-\breakslide
-% ---------
-
-{\color{gray}
-\everymath{\color{gray}}
-the path
-  \begin{align*}
-    \apfunc f (\pairpath(s,r)) :f(x_1,b_1) = f(x_2,b_2)
-  \end{align*}
-  is equal to the composite \dots
-}
-{\LARGE
-  \begin{align}
-    f(x_1,b_1)
-    &\jdeq d(x_1)(b_1) \notag\\
-    &= \transfib{x\mapsto Z}{s}{d(x_1)(b_1)}
-    \tag{by $\opp{\text{(\cref{thm:trans-trivial})}}$}\\
-    &= \transfib{x\mapsto Z}{s}{d(x_1)(\trans{(\refl{x_2})}{b_1})}
-    \tag{by $\opp{\text{(\cref{thm:trans-trivial})}}$}\\
-    &= \transfib{x\mapsto Z}{s}{d(x_1)(\trans{(\opp s\ct s)}{b_1})}
-    \tag{by $\opp{\text{(\cref{thm:omg}\ref{item:omg2})}}$}\\
-    &= \transfib{x\mapsto Z}{s}{d(x_1)(\trans{\opp s}{\trans{s}{b_1}})}
-    \tag{by $\opp{\text{(\cref{thm:transport-concat})}}$}\\
-    &= \big(\transfib{x\mapsto (B(x)\to Z)}{s}{d(x_1)}\big)(\trans{s}{b_1})
-    \tag{by~\eqref{eq:transport-arrow}}\\
-    &= d(x_2)(\trans{s}{b_1})
-    \tag{by $\happly(\apdfunc{d}(s))(\trans{s}{b_1}$}\\
-    &= d(x_2)(b_2)
-    \tag{by $\apfunc{d(x_2)}(r)$}\\
-    &\jdeq f(x_2,b_2).
-    \notag
-  \end{align}
+  \begin{table}[h!]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{| l | l | l | l |}
+    \hline
+    \color{black}Instance & \color{black}small & \color{black}\color{black}medium  & \color{black}large\\ \hline \hline
+    \color{black}Events & 100 & 400 & 400 \\
+    \color{black}Room & 5 & 5 &  10 \\
+    \color{black}Day & 5 & 5 & 5 \\
+    \color{black}Slot & 8 & 8 & 8 \\
+    \hline
+  \end{tabular}%
   }
-\end{lem}
-\vspace*{5mm}
-\begin{lem}\label{thm:flattening-rectnd-beta-ppt}
-  $\apfunc{f}(\ppt'(b,y)) = p(b,y)$.
-\end{lem}
+  \label{Table:instances}
+  \caption{Set of test instances at EAFIT University}
+\end{table}
+
 \end{slide}
-% ---------
 
 \begin{slide}
-\begin{proof}[Proof of \cref{thm:flattening-lem} (The Flattening Lemma)]
-\hspace*{5cm}\\
-Let us define
-\begin{itemize}
-    \item $k:(\sm{w:W}P(w)) \to \Wtil$ by using the recursion
-    principle of \cref{thm:flattening-rectnd}, with $\cct$ and
-    $\ppt$ as input data.
-   
-    \item $h:\Wtil \to \sm{w:W}P(w)$ by using the recursion principle
-    for \Wtil, with $\cct'$ and $\ppt'$ as input data.
-\vspace*{\fill}
-\newpage
-\vspace*{\fill}
-    \item $s_1 : \prd{z : \Wtil} k(h(z)) = z$\\
-    By induction on $z$, it suffices to consider the two constructors of \Wtil.
-  But we have
-  \begin{align*}
-    k(h(\cct(a,x))) \jdeq k(\cct'(a,x)) \jdeq \cct(a,x)
-  \end{align*}
-  by definition, while similarly
-  \begin{align*}
-  \ap k{\ap h{\ppt(b,y)}} = \ap k{\ppt'(b,y)} = \ppt(b,y)
-  \end{align*}
-  using the propositional computation rule for $\Wtil$ and \cref{thm:flattening-rectnd-beta-ppt}.
-  
-  \item  $s_2 : \prd{z : \sm{w:W}P(w)} h(k(z)) = z$.\\
-  But this is essentially identical, using \cref{thm:flattening-rect}
-  for ``induction on $\sm{w:W}P(w)$'' and the same computation rules.
-  \end{itemize}
-\end{proof}
+\textbf{Computational experiments:}\\
+\begin{table}[h!]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{| l | l | l | l | l | l | l | l | l |}
+    \hline
+    \color{black}Room&\color{black}Type Room&\color{black}Capacity&\color{black}Event&\color{black}Group&\color{black}Max Student&\color{black}Day &\color{black}Start Time&\color{black}End Time \\ \hline \hline
+
+    \color{black}35401&\color{black}Aula Normal&\color{black}50&\color{black}METODOLOGÍA DEL APRENDIZAJE&\color{black}024 & \color{black}26 & \color{black}T  & \color{black}7.0 & \color{black}9.0 \\
+    \color{black}35401 & \color{black}Aula Normal & \color{black}50 & \color{black}MODELACIÓN Y SIMULACIÓN I & \color{black}001 & \color{black}30 & \color{black}T  & \color{black}9.0 & \color{black}12.0 \\
+    \color{black}35401 & \color{black}Aula Normal & \color{black}50 & \color{black}METODOLOGÍA DEL APRENDIZAJE & \color{black}024 & \color{black}26 & \color{black}W  & \color{black}14.0 & \color{black}15.0 \\
+    \color{black}35401 & \color{black}Aula Normal & \color{black}50 & \color{black}MATEMÁTICAS I & \color{black}002 & \color{black}40 & \color{black}TH  & \color{black}18.0 & \color{black}21.0 \\
+    \color{black}35401 & \color{black}Aula Normal & \color{black}50 & \color{black}MATEMÁTICAS 1 & \color{black}010 & \color{black}37 & \color{black}F  & \color{black}6.0 & \color{black}9.0 \\
+    \color{black}35403 & \color{black}Aula Normal & \color{black}36 & \color{black}MATEMÁTICAS III (ECONOMÍA) & \color{black}003 & \color{black}32 & \color{black}F  & \color{black}6.0 & \color{black}9.0 \\
+    \color{black}35501 & \color{black}Aula Normal & \color{black}50 & \color{black}BIOLOGÍA MOLECULAR & \color{black}101 & \color{black}30 & \color{black}F  & \color{black}6.0 & \color{black}9.0 \\
+    \color{black}35501 & \color{black}Aula Normal & \color{black}50 & \color{black}MATEMÁTICAS 1 & \color{black}001 & \color{black}37 & \color{black}S  & \color{black}12.0 & \color{black}15.0 \\
+    \color{black}38107 & \color{black}Aula Normal & \color{black}25 & \color{black}FUNDAMENTOS DE FISICOQUÍMICA & \color{black}156 & \color{black}20 & \color{black}T  & \color{black}15.0 & \color{black}17.0 \\
+    \color{black}38107 & \color{black}Aula Normal & \color{black}25 & \color{black}FUNDAMENTOS DE FISICOQUÍMICA & \color{black}156 & \color{black}20 & \color{black}S  & \color{black}9.0 & \color{black}12.0 \\
+    \color{black}38201 & \color{black}Aula Normal & \color{black}50 & \color{black}BIOÉTICA & \color{black}001 & \color{black}30 & \color{black}M  & \color{black}6.0 & \color{black}8.0 \\
+    \color{black}38201 & \color{black}Aula Normal & \color{black}50 & \color{black}METODOLOGÍA DEL APRENDIZAJE & \color{black}022 & \color{black}26 & \color{black}W  & \color{black}14.0 & \color{black}15.0 \\
+    \color{black}38201 & \color{black}Aula Normal & \color{black}50 & \color{black}ESTADÍSTICA 2 (ECONOMÍA) & \color{black}001 & \color{black}26 & \color{black}W  & \color{black}9.0 & \color{black}12.0 \\
+    \color{black}38201 & \color{black}Aula Normal & \color{black}50 & \color{black}BIOÉTICA & \color{black}001 & \color{black}30 & \color{black}F  & \color{black}11.0 & \color{black}12.0 \\
+
+
+    \hline
+  \end{tabular}%
+  }
+  \label{Table:result}
+  \caption{Timetabling Events at EAFIT University}
+\end{table}
 \end{slide}
-% ---------
+
+\begin{slide}
+\textbf{Conclusions:}\\
+
+\begin{itemize}
+\item The first stage of the problem was successfully modeled, which corresponds to the assignment of events.
+\item An algorithm was proposed for the scheduling of events
+at the EAFIT University.
+\item An algorithm was proposed for the scheduling of teacher
+at the EAFIT University.
+\end{itemize}
+\end{slide}
 
 % ---------------------------------------------------------------------
 % -- References --
 % ---------------------------------------------------------------------
-\begin{slide}
-\textbf{\color{darkred} References}
-\begin{itemize}
-\item Univalent Foundations Program, The (2013). Homotopy Type Theory:
-Univalent Foundations of Mathematics. Institute for Advanced Study.\\ URL:~\url{http://saunders.phil.cmu.edu/book/hott-online.pdf}
-\item Bezem M. Lecture notes for a seminar on Homotopy Type Theory.
-URL:~\url{https://github.com/marcbezem/INF329}
-\end{itemize}
-\end{slide}
+%\begin{slide}
+%\textbf{\color{darkred} References}
+
+%\end{slide}
 % ---------
+
+\begin{frame}\\
+  \bibliographystyle{authordate1}
+  %\bibliographystyle{alpha}
+  \large{\bibliography{ref.bib}}
+\end{frame}
 
 \begin{slide}
 (Bonus Slides)
@@ -825,68 +527,40 @@ URL:~\url{https://github.com/marcbezem/INF329}
 
 
 \begin{slide}
-\label{sigmatype}
-\textbf{Dependent pair types (\texorpdfstring{$\Sigma$}{Σ}-types)}\\[2mm]
+\textbf{Solution construction flow:}\\
+{\huge
+  \begin{algorithmic}[1]
+    \Procedure{GreedyRandomized}{}%\Comment{The g.c.d. of a and b}
 
-% Judgments concerning such expressions are introduced by the following
-% rules:
-%
-\begin{itemize}
-\item if $A:\UU_n$ and $B: A \rightarrow \UU_n$, then $\sm{x:A}B(x) : \UU_n$
-\item if, in addition, $a:A$ and $b:B(a)$, then $\tup a b:\sm{x:A}B(x)$
-\end{itemize}
-%
-If we have $A$ and $B$ as above, $C : (\sm{x:A}B(x)) \rightarrow \UU_m$, and
-\[
-  d:\tprd{x:A}{y:B(x)} C(\tup x y)
-\]
-we can introduce a defined constant
-\[
-  f:\tprd{p:\sm{x:A}B(x)} C(p)
-\]
-with the defining equation
-\[
-  f(\tup x y)\defeq d(x,y).
-\]
+    \State $teacher \gets $ \textbf{SetOutData( \textbf{GetInData($event$)})};
+    \State $event \gets $ \textbf{SetNext($teacher$)};
+    \State $room \gets $ \textbf{SetOutData( \textbf{GetInData($event$)} )};
+    \State $room \gets $ \textbf{SetNext($event$)};
+
+    \State $slot \gets $ \textbf{SetSlotFree( \textbf{GetInData($slot$)} )};
+    \State $slot \gets $ \textbf{SetOutData( \textbf{GetInData($room$)} )};
+    \State $slot \gets $ \textbf{SetNext($room$)};
+    \State \textbf{processor($slot$)};
+
+    \EndProcedure
+  \end{algorithmic}
+}
 \end{slide}
-% ---------
+
 
 \begin{slide}
-\label{suspensions}
-\textbf{Suspensions}\\
-It is a type $\susp A$ defined by the following generators:
+\textbf{Processor:}\\
+{\huge
+  \begin{algorithmic}[1]
+    \Procedure{Processor}{}%\Comment{The g.c.d. of a and b}
 
-\begin{itemize}
-\item a point $\north:\susp A$,
-\item a point $\south:\susp A$, and
-\item a function $\merid:A \to (\id[\susp A]\north\south)$.
-\end{itemize}
-
-The recursion principle for $\susp A$ says that given a 
-type $B$ together with
-\begin{itemize}
-\item points $n,s:B$ and
-\item a function $m:A \to (n=s)$,
-\end{itemize}
-we have a function $f:\susp A \to B$ such that $f(\north)\jdeq n$
-and $f(\south)\jdeq s$, and
-for all $a:A$ we have $\ap f {\merid(a)} = m(a)$.
-\index{induction principle!for suspension}%
+    \State \textbf{MakeObject($inData$)};
+    \If{ \textbf{ Next()} $\not= null$}
+      \State \textbf{Next().processor()}
+    \EndIf
+    \EndProcedure
+  \end{algorithmic}
+}
 \end{slide}
-% ---------
-
-\begin{slide}
-Similarly, the induction principle says that given
-$P:\susp A \to \type$ together with
-\begin{itemize}
-\item a point $n:P(\north)$,
-\item a point $s:P(\south)$, and
-\item for each $a:A$, a path $m(a):\dpath P{\merid(a)}ns$,
-\end{itemize}
-there exists a function $f:\prd{x:\susp A} P(x)$ such that
-$f(\north)\jdeq n$ and $f(\south)\jdeq s$ and for each $a:A$
-we have $\apd f {\merid(a)} = m(a)$.
-\end{slide}
-% ---------
 
 \end{document}
