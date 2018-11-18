@@ -1,0 +1,158 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citename{Abdelhalim \& {El Khayat}, }2016]{Abdelhalim2016}
+Abdelhalim, Esraa~A., \& {El Khayat}, Ghada~A. 2016.
+\newblock {A Utilization-based Genetic Algorithm for Solving the University
+  Timetabling Problem (UGA)}.
+\newblock {\em Alexandria Engineering Journal}, {\bf 55}(2), 1395--1409.
+
+\bibitem[\protect\citename{Abdullah {\em et~al.\ }\relax, }2005]{Abdullah2005}
+Abdullah, Salwani, Abdullah, Salwani, Burke, Edmund~K., \& Mccollum, Barry.
+  2005.
+\newblock {An Investigation Of Variable Neighbourhood Search For University
+  Course Timetabling}.
+\newblock {\em IN THE 2 ND MULTIDISCIPLINARY INTERNATIONAL CONFERENCE ON
+  SCHEDULING: THEORY AND APPLICATIONS (MISTA},  413----427.
+
+\bibitem[\protect\citename{Al-Betar {\em et~al.\ }\relax, }2012]{Al-Betar2012}
+Al-Betar, Mohammed~Azmi, Khader, Ahamad~Tajudin, \& Zaman, Munir. 2012.
+\newblock {University course timetabling using a hybrid harmony search
+  metaheuristic algorithm}.
+\newblock {\em IEEE Transactions on Systems, Man and Cybernetics Part C:
+  Applications and Reviews}, {\bf 42}(5), 664--681.
+
+\bibitem[\protect\citename{Aladag {\em et~al.\ }\relax, }2009]{Aladag2009}
+Aladag, Cagdas~Hakan, Hocaoglu, Gulsum, \& Basaran, Murat~Alper. 2009.
+\newblock {The effect of neighborhood structures on tabu search algorithm in
+  solving course timetabling problem}.
+\newblock {\em Expert Systems with Applications}, {\bf 36}(10), 12349--12356.
+
+\bibitem[\protect\citename{Alvarez-Valdes {\em et~al.\ }\relax,
+  }2002]{Alvarez-Valdes2002}
+Alvarez-Valdes, Ramon, Crespo, Enric, \& Tamarit, Jose~M. 2002.
+\newblock {Design and implementation of a course scheduling system using Tabu
+  Search}.
+\newblock {\em European Journal of Operational Research}, {\bf 137}(3),
+  512--523.
+
+\bibitem[\protect\citename{aro Bolaji {\em et~al.\ }\relax, }2014]{Bolaji2014}
+aro Bolaji, Asaju~La, Khader, Ahamad~Tajudin, Al-Betar, Mohammed~Azmi, \&
+  Awadallah, Mohammed~A. 2014.
+\newblock {University course timetabling using hybridized artificial bee colony
+  with hill climbing optimizer}.
+\newblock {\em Journal of Computational Science}, {\bf 5}(5), 809--818.
+
+\bibitem[\protect\citename{Aycan \& Ayav, }2009]{Aycan2009}
+Aycan, E., \& Ayav, T. 2009.
+\newblock {Solving the Course Scheduling Problem Using Simulated Annealing}.
+\newblock {\em 2009 IEEE International Advance Computing Conference},  6--7.
+
+\bibitem[\protect\citename{Badoni {\em et~al.\ }\relax, }2014]{Badoni2014}
+Badoni, Rakesh~P., Gupta, D.K., \& Mishra, Pallavi. 2014.
+\newblock {A new hybrid algorithm for university course timetabling problem
+  using events based on groupings of students}.
+\newblock {\em Computers {\&} Industrial Engineering}, {\bf 78}(dec), 12--25.
+
+\bibitem[\protect\citename{Boland {\em et~al.\ }\relax, }2008]{Boland2008}
+Boland, Natashia, Hughes, Barry~D., Merlot, L. T~G, \& Stuckey, Peter~J. 2008.
+\newblock {New integer linear programming approaches for course timetabling}.
+\newblock {\em Computers and Operations Research}, {\bf 35}(7), 2209--2233.
+
+\bibitem[\protect\citename{Brabazon {\em et~al.\ }\relax, }2015]{Brabazon2015}
+Brabazon, Anthony, O'Neill, Michael, \& McGarraghy, Se{\'{a}}n. 2015.
+\newblock {A MAX-MIN Ant System for the University Course Timetabling Problem}.
+\newblock {\em Pages  141--170 of:} {\em Natural Computing Series},  vol. 28.
+
+\bibitem[\protect\citename{Chaudhuri \& De, }2010]{Chaudhuri2010}
+Chaudhuri, Arindam, \& De, Kajal. 2010.
+\newblock {Fuzzy genetic heuristic for university course timetable problem}.
+\newblock {\em International Journal of Advances in Soft Computing and its
+  Applications}, {\bf 2}(1), 100--123.
+
+\bibitem[\protect\citename{de~Werra, }1985]{DeWerra1985}
+de~Werra, D. 1985.
+\newblock {An introduction to timetabling}.
+\newblock {\em European Journal of Operational Research}, {\bf 19}(2),
+  151--162.
+
+\bibitem[\protect\citename{Deris {\em et~al.\ }\relax, }2000]{Deris2000}
+Deris, Safaai, Omatu, Sigeru, \& Ohta, Hiroshi. 2000.
+\newblock {Timetable planning using the constraint-based reasoning}.
+\newblock {\em Computers and Operations Research}, {\bf 27}(9), 819--840.
+
+\bibitem[\protect\citename{Golabpour {\em et~al.\ }\relax,
+  }2008]{Golabpour2008}
+Golabpour, Amin, Farahi, Ahmad, Beigi, Hossein, Shirazi, Hossein~Mozdorani, \&
+  Kootiani, Ahmad Zadali~Mohammad. 2008.
+\newblock {A fuzzy solution based on Memetic algorithms for timetabling}.
+\newblock {\em Pages  108--110 of:} {\em Proceedings - 2008 International
+  Conference on MultiMedia and Information Technology, MMIT 2008}.
+
+\bibitem[\protect\citename{Joudaki {\em et~al.\ }\relax, }2011]{Joudaki2011}
+Joudaki, M., Imani, M., \& Mazhari, N. 2011.
+\newblock {Using improved memetic algorithm and local search to solve
+  university Course Timetabling problem (UCTP)}.
+\newblock {\em In:} {\em Proceedings of the 2011 International Conference on
+  Artificial Intelligence, ICAI 2011},  vol. 2.
+
+\bibitem[\protect\citename{Kohshori {\em et~al.\ }\relax, }2011]{Kohshori2011}
+Kohshori, M~S, Abadeh, M~S, \& Sajedi, H. 2011.
+\newblock {A fuzzy genetic algorithm with local search for university course
+  timetabling}.
+\newblock {\em Pages  250--254 of:} {\em Data Mining and Intelligent
+  Information Technology Applications (ICMiA), 2011 3rd International
+  Conference on}.
+
+\bibitem[\protect\citename{McCollum, }2007]{eventMAP}
+McCollum, B. 2007.
+\newblock {\em {International Timetabling Competition}}.
+\newblock \url{http://www.cs.qub.ac.uk/itc2007/}.
+\newblock [Online; accessed 23-September-2017].
+
+\bibitem[\protect\citename{Nandhini \& Kanmani, }2009]{Nandhini2009}
+Nandhini, M., \& Kanmani, S. 2009.
+\newblock {Implementation of class timetabling using multi agents}.
+\newblock {\em In:} {\em 2009 International Conference on Intelligent Agent and
+  Multi-Agent Systems, IAMA 2009}.
+
+\bibitem[\protect\citename{Phillips {\em et~al.\ }\relax, }2015]{Phillips2015}
+Phillips, Antony~E., Waterer, Hamish, Ehrgott, Matthias, \& Ryan, David~M.
+  2015.
+\newblock {Integer programming methods for large-scale practical classroom
+  assignment problems}.
+\newblock {\em Computers {\&} Operations Research}, {\bf 53}, 42--53.
+
+\bibitem[\protect\citename{Shatnawi {\em et~al.\ }\relax, }2010]{Shatnawi2010}
+Shatnawi, Safwan, Al-Rababah, Khaleel, \& Bani-Ismail, Basel. 2010.
+\newblock {Applying a novel clustering technique based on FP- tree to
+  University timetabling problem: A case study}.
+\newblock {\em Pages  314--319 of:} {\em Proceedings, ICCES'2010 - 2010
+  International Conference on Computer Engineering and Systems}.
+
+\bibitem[\protect\citename{Socha {\em et~al.\ }\relax, }2002]{Socha2002}
+Socha, Krzysztof, Knowles, Joshua, \& Sampels, Michael. 2002.
+\newblock {A MAX - MIN Ant System for the University Course Timetabling
+  Problem}.
+\newblock {\em Ant algorithms},  1--13.
+
+\bibitem[\protect\citename{Tuga {\em et~al.\ }\relax, }2007]{Tuga2007}
+Tuga, Mauritsius, Berretta, Regina, \& Mendes, Alexandre. 2007.
+\newblock {A hybrid simulated annealing with Kempe Chain neighborhood for the
+  university timetabling problem}.
+\newblock {\em Pages  400--405 of:} {\em Proceedings - 6th IEEE/ACIS
+  International Conference on Computer and Information Science, ICIS 2007; 1st
+  IEEE/ACIS International Workshop on e-Activity, IWEA 2007}.
+
+\bibitem[\protect\citename{Yang \& Jat, }2011]{Yang2011}
+Yang, Shengxiang, \& Jat, Sadaf~Naseem. 2011.
+\newblock {Genetic algorithms with guided and local search strategies for
+  university course timetabling}.
+\newblock {\em IEEE Transactions on Systems, Man and Cybernetics Part C:
+  Applications and Reviews}, {\bf 41}(1), 93--106.
+
+\bibitem[\protect\citename{Yanga \& Paranjapea, }2011]{Yanga2011}
+Yanga, Yan, \& Paranjapea, Raman. 2011.
+\newblock {A multi-agent system for course timetabling}.
+\newblock {\em Intelligent Decision Technologies}, {\bf 5}(2), 113--131.
+
+\end{thebibliography}
