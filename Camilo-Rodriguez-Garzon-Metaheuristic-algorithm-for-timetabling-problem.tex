@@ -116,9 +116,10 @@
   {\Huge{\underline{\textbf{Metaheuristic algorithm for timetabling problem}}}} \\[4mm]
   {\Huge{(Seminar III)}} \\[10mm]
   {\Huge{Camilo Rodríguez-Garzón}} \\
-  {\Huge{Juan Rivera-Agudelo}} \\[10mm]
-  {\Huge University EAFIT}\\
-  {\Huge Medellín, Colombia}\\[20mm]
+  {\Huge{Juan Carlos Rivera}} \\[20mm]
+  {\Huge Universidad EAFIT}\\
+  {\Huge Mathematical Modeling Research Group}\\[10mm]
+  {\Huge Medellín, Colombia}\\[10mm]
   {\Huge June 5, 2018}\\
   {\LARGE\color{gray} Updated: \today}
 \end{center}
@@ -127,8 +128,8 @@
 \begin{slide}
 \textbf{Overview}\\
 \begin{itemize}
-    \item Introduction
     \item Motivation
+    \item Introduction
     \item Hard constraints
     \item Soft constraints
     \item Methodology
@@ -142,10 +143,10 @@
 \begin{slide}
 \textbf{Motivation:}\\
 
-\begin{itemize}
+\begin{itemize} 
 \item Currently EAFIT does not have an automated system that allows to schedule university timetabling.
 \item Each school or university has different characteristics that make the problem particular.
-\item This is a problem of combinatorial optimization of complexity NP-Hard \cite {Abdelhalim2016}.
+\item This is a NP-Hard combinatorial optimization problem \cite {Abdelhalim2016}.
 \item The algorithm in developing can be applied to different topics that are related to timetabling scheduling.
 \end{itemize}
 
@@ -157,7 +158,7 @@
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.65\linewidth]{timetabling.png}
+  \includegraphics[width=0.65\linewidth]{images/timetabling.png}
   \caption{\label{fig:timetabling}Timetabling problem}
 \end{figure}
 
@@ -165,48 +166,48 @@
 
 
 \begin{slide}
-\textbf{Hard constraints event:}\\
+\textbf{Hard constraint events:}\\
 
-A factible solution meets the following set of hard constraints $ \mathrm{CH_{1}-CH_{6}} $ presented below:
+A factible solution meets the following set of hard constraints $ \mathrm{HC_{1}-HC_{6}} $ presented below:
 
 \begin{itemize}
-\item $\mathrm{HC_{1}}$: {\color{gray}(Two event can not be scheduled on the same day, period and room.)}
-\item $\mathrm{HC_{2}}$: {\color{gray}(The room must meet the characteristics required by the event.)}
-\item $\mathrm{HC_{3}}$: {\color{gray}(The maximum number of daily lessons for each event must be respected.)}
-\item $\mathrm{HC_{4}}$: {\color{gray}(Two lessons from the same event must be consecutive when scheduled for the same  day, in case it is required by the event.)}
+\item $\mathrm{HC_{1}}$: {\color{gray}Two event can not be scheduled on the same day, period and room.}
+\item $\mathrm{HC_{2}}$: {\color{gray}Assigned rooms must meet the characteristics required by the events.}
+\item $\mathrm{HC_{3}}$: {\color{gray}The time load defined for each event must be satisfied.}
+\item $\mathrm{HC_{4}}$: {\color{gray}Two lessons from the same event must be consecutive when scheduled for the same  day, in case it is required by the event.}
 \end{itemize}
 
 \end{slide}
 
 \begin{slide}
-\textbf{Hard constraints teacher:}\\
+\textbf{Hard constraint teachers:}\\
 
 \begin{itemize}
-\item $\mathrm{HC_{5}}$: {\color{gray}(A teacher can not be scheduled to more than one lesson in a given period.)}
-\item $\mathrm{HC_{6}}$: {\color{gray}(A teacher can not be scheduled to a period in which she/he is unavailable.)}
+\item $\mathrm{HC_{5}}$: {\color{gray}A teacher can not be scheduled to more than one lesson in a given period.}
+\item $\mathrm{HC_{6}}$: {\color{gray}A teacher can not be scheduled to a period in which she/he is unavailable.}
 \end{itemize}
 
 \end{slide}
 
 \begin{slide}
-\textbf{Hard constraints student:}\\
+\textbf{Hard constraint students:}\\
 
 \begin{itemize}
-\item $\mathrm{HC_{7}}$: {Give students with perfect curriculum six different schedules for each of the events they are studying and be part of this semester.}
-\item $\mathrm{HC_{8}}$: {\color{gray}(No student can be assigned more than one event at the same time.)}
-\item $\mathrm{HC_{9}}$: {\color{gray}(The number of students attending the event must be less than or equal to the capacity to the classroom.)}
+\item $\mathrm{HC_{7}}$: {For students with perfect curriculum, at least six events for each course must be feasible.}
+\item $\mathrm{HC_{8}}$: {\color{gray}No student can be assigned more than one event at the same time.}
+\item $\mathrm{HC_{9}}$: {\color{gray}The number of students attending the event must be less than or equal to the capacity to the classroom.}
 \end{itemize}
 \end{slide}
 
 \begin{slide}
 \textbf{Soft constraints:}\\
 
-In addition to the feasibility with respect to difficult constraints, the requirements of $ \mathrm {SC_{1}-SC_{4}} $ listed below should be satisfied as much as possible:
+In addition to the feasibility with respect to mandatory constraints, the requirements of $ \mathrm {SC_{1}-SC_{4}} $ listed below should be satisfied as much as possible:
 
 \begin{itemize}
-\item $\mathrm{SC_{1}}$: {\color{gray}(Avoid teachers' idle periods.)}
-\item $\mathrm{SC_{2}}$: {\color{gray}(A student should not have a single course on a day.)}
-\item $\mathrm{SC_{3}}$: {\color{gray}(A student should not have more than two consecutive courses.)}
+\item $\mathrm{SC_{1}}$: {\color{gray}Avoid teachers' idle periods.}
+\item $\mathrm{SC_{2}}$: {\color{gray}Students should not have a single course on a day.}
+\item $\mathrm{SC_{3}}$: {\color{gray}Students should not have more than two consecutive courses.}
 \end{itemize}
 
 \end{slide}
@@ -216,7 +217,7 @@ In addition to the feasibility with respect to difficult constraints, the requir
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1.1\linewidth]{methodologyflow.png}
+  \includegraphics[width=1.1\linewidth]{images/methodologyflow.png}
   \caption{\label{fig:methodologyflow}Timetabling problem methodology}
 \end{figure}
 \end{slide}
@@ -227,7 +228,7 @@ In addition to the feasibility with respect to difficult constraints, the requir
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.7\linewidth]{methodologyflow2.png}
+  \includegraphics[width=0.7\linewidth]{images/methodologyflow2.png}
   \caption{\label{fig:methodologyflow2}Timetabling problem methodology}
 \end{figure}
 \end{slide}
@@ -265,7 +266,7 @@ Programming (CSP)} & \multicolumn{1}{l|}{} & \color{black} Timetable planning us
     \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Artificial Bee Colony (ABC)} & \color{black} \multirow{2}{11cm}{ University course timetabling using hybridized artificial bee colony with hill climbing optimizer \cite{Bolaji2014}}\\
     \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
 
-    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Meme tic Algorithm (MA)} & \color{black} \multirow{2}{11cm}{ Using improved memetic algorithm and local search to solve university Course Timetabling problem (UCTP) \cite{Joudaki2011}}\\
+    \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Memetic Algorithm (MA)} & \color{black} \multirow{2}{11cm}{ Using improved memetic algorithm and local search to solve university Course Timetabling problem (UCTP) \cite{Joudaki2011}}\\
     \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
 
     \multicolumn{1}{|l}{} & \multicolumn{1}{l|}{\color{black}Harmony Search Algorithm (HSA)} & \color{black} \multirow{2}{11cm}{ University course timetabling using a hybrid harmony search metaheuristic algorithm \cite{Al-Betar2012} }\\
@@ -289,7 +290,7 @@ Programming (CSP)} & \multicolumn{1}{l|}{} & \color{black} Timetable planning us
     \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
     \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
 
-    \multicolumn{1}{|l}{Novel Intelligent} & \multicolumn{1}{l|}{\color{black}Hybrid Algorithms (Hybrid Meta heuristic)} & \color{black} \multirow{2}{11cm}{ A new hybrid algorithm for university course timetabling problem using events based on groupings of students \cite{Badoni2014} } \\
+    \multicolumn{1}{|l}{Novel Intelligent} & \multicolumn{1}{l|}{\color{black}Hybrid Algorithms (Hybrid Metaheuristic)} & \color{black} \multirow{2}{11cm}{ A new hybrid algorithm for university course timetabling problem using events based on groupings of students \cite{Badoni2014} } \\
     \multicolumn{1}{|l}{}& \multicolumn{1}{l|}{} & \\
 
 
@@ -310,9 +311,7 @@ Programming (CSP)} & \multicolumn{1}{l|}{} & \color{black} Timetable planning us
   \label{Table:relatedwork}
   \caption{Brief literature about University Timetabling Problem}
 \end{table}
-
 \end{slide}
-
 \begin{slide}
 \textbf{Problem formulation:}\\
 
@@ -341,7 +340,7 @@ Programming (CSP)} & \multicolumn{1}{l|}{} & \color{black} Timetable planning us
     \end{array}
     \right.
     $\\
-    $\phi$ & \color{black}Subset of incompatible slots with slot $s$ \\
+    $\phi_s$ & \color{black}Subset of incompatible slots with slot $s$ \\
     \hline
     \multicolumn{2}{p{10cm}}{\color{gray}Decision variables} \\
     \hline 
@@ -364,8 +363,12 @@ Programming (CSP)} & \multicolumn{1}{l|}{} & \color{black} Timetable planning us
 \begin{slide}
 \textbf{Model:}\\
 
+\numberwithin{equation}{subsection}
+\renewcommand\theequation{\arabic{equation}}
+
+
 {\LARGE
-The objective ($1.1.1$) is to minimize the use of artificial salons. The IP restrictions are described below:
+The objective (\ref{eq:fo}) is to minimize the use of artificial salons. The IP restrictions are described below:
 
   \begin{align}
     \label{eq:fo} \min \, \sum_{e \in E} \sum_{s \in S} \sum_{r \in R} w_{r} \cdot x_{esr}
@@ -393,11 +396,11 @@ The objective ($1.1.1$) is to minimize the use of artificial salons. The IP rest
 \textbf{Constraints:}\\
 
 \begin{itemize}
-\item ($1.1.2$) - satisfies the restriction $HC_1$.
-\item ($1.1.3$) - satisfies the restriction $HC_3$.
-\item ($1.1.4$) - satisfies the restriction $HC_2$.
-\item ($1.1.5$) - only one event can be assigned to one of the slots of the subset of incompatible slots $\phi$.
-\item ($1.1.6$) - satisfies the restriction $HC_4$.
+\item \ref{eq:H1} - satisfies the restriction $HC_1$.
+\item \ref{eq:H2} - satisfies the restriction $HC_3$.
+\item \ref{eq:H3} - satisfies the restriction $HC_2$.
+\item \ref{eq:H4} - only one event can be assigned to one of the slots of the subset of incompatible slots $\phi_s$.
+\item \ref{eq:H5} - satisfies the restriction $HC_4$.
 \end{itemize}
 
 \end{slide}
@@ -407,7 +410,7 @@ The objective ($1.1.1$) is to minimize the use of artificial salons. The IP rest
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.65\linewidth]{chainresponsability.png}
+  \includegraphics[width=0.65\linewidth]{images/chainresponsability.png}
   \caption{\label{fig:methodologyflow2}Chain Responsability to Timetabling problem}
 \end{figure}
 \end{slide}
@@ -426,7 +429,7 @@ The objective ($1.1.1$) is to minimize the use of artificial salons. The IP rest
         \State $x\gets $ \textbf{LocalSearch($x$)};
         \If{ $f(x) < f^*$ }
           \State $f^*\gets f(x);$
-          \State $x*\gets x;$
+          \State $x^*\gets x;$
         \EndIf    
       \EndFor
     \EndIf
@@ -439,7 +442,7 @@ The objective ($1.1.1$) is to minimize the use of artificial salons. The IP rest
 \begin{slide}
 \textbf{Computational experiments:}\\
 
-According to \citep{Bolaji2014} \citep{eventMAP} the algorithm will be tested using the following instances:\\
+According to \citep{Bolaji2014, eventMAP} the algorithm will be tested using the following instances:\\
 
   \begin{table}[h!]
   \centering
@@ -467,7 +470,7 @@ According to \citep{Bolaji2014} \citep{eventMAP} the algorithm will be tested us
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{| l | l | l | l | l | l | l | l | l |}
     \hline
-    \color{black}Room&\color{black}Type Room&\color{black}Capacity&\color{black}Event&\color{black}Group&\color{black}Max Student&\color{black}Day &\color{black}Start Time&\color{black}End Time \\ \hline \hline
+    \color{black}\textbf{Room}&\color{black}\textbf{Type Room}&\color{black}\textbf{Capacity}&\color{black}\textbf{Event}&\color{black}\textbf{Group}&\color{black}\textbf{Max Student}&\color{black}\textbf{Day}&\color{black}\textbf{Start Time}&\color{black}\textbf{End Time} \\ \hline \hline
 
     \color{black}35401&\color{black}Aula Normal&\color{black}50&\color{black}METODOLOGÍA DEL APRENDIZAJE&\color{black}024 & \color{black}26 & \color{black}T  & \color{black}7.0 & \color{black}9.0 \\
     \color{black}35401 & \color{black}Aula Normal & \color{black}50 & \color{black}MODELACIÓN Y SIMULACIÓN I & \color{black}001 & \color{black}30 & \color{black}T  & \color{black}9.0 & \color{black}12.0 \\
@@ -517,7 +520,7 @@ at the EAFIT University.
 \begin{frame}\\
   \bibliographystyle{authordate1}
   %\bibliographystyle{alpha}
-  \large{\bibliography{ref.bib}}
+  \large{\bibliography{bibliography.bib}}
 \end{frame}
 
 \begin{slide}
